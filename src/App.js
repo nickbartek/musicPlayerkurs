@@ -5,19 +5,31 @@ function Heading({ title }) {
   return <h1>{title}</h1>;
 }
 
-function SongPlayer({ showControls = false, song }) {
+function SongPlayer({ showControls = false, song, ...remainingAudioProps }) {
   const audioRef = useRef();
+  var [showControls, setshow] = useState(false);
+
+  var prop = { ...remainingAudioProps };
+  console.log(prop);
+
   const { audioUrl, coverUrl } = song;
   return (
     <section className="SongPlayer">
       <Heading title="Music Player" />
       <img width="250" height="250" src={coverUrl} alt="Song cover" />
-      <audio ref={audioRef} key={audioUrl} controls={showControls}>
+      <audio
+        ref={audioRef}
+        key={audioUrl}
+        controls={showControls}
+        {...remainingAudioProps}
+      >
         <source src={audioUrl} />
       </audio>
       <div>
+        <br />
         <button onClick={() => audioRef.current.play()}>Play</button>
         <button onClick={() => audioRef.current.pause()}>Pause</button>
+        <button onClick={() => setshow(!showControls)}>hide/show</button>
       </div>
     </section>
   );
@@ -67,7 +79,7 @@ export default function App() {
         "Loading..."
       ) : (
         <>
-          <SongPlayer song={currentSong} />
+          <SongPlayer song={currentSong} loop />
           <Songs>
             <Heading title="Songs" />
             <ul>
