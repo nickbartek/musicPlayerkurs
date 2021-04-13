@@ -5,13 +5,19 @@ function Heading({ title }) {
   return <h1>{title}</h1>;
 }
 
-function SongPlayer({ showControls = false, song, ...remainingAudioProps }) {
+function SongPlayer({
+  showControls = false,
+  song,
+  songfor,
+  ...remainingAudioProps
+}) {
   const audioRef = useRef();
-  const audiorefform = useRef();
+  const audioRefform = useRef();
   var [showControls, setshow] = useState(false);
 
-  const { audioUrlform, coverUrlform } = song;
+  const { audioUrlform, coverUrlform } = songfor;
   const { audioUrl, coverUrl } = song;
+  console.log(audioRef, audioRefform);
   return (
     <section className="SongPlayer">
       <Heading title="Music Player" />
@@ -24,9 +30,12 @@ function SongPlayer({ showControls = false, song, ...remainingAudioProps }) {
       >
         <source src={audioUrl} />
       </audio>
-      <audio ref={audiorefform} key={audioUrlform}></audio>
+
+      <audio ref={audioRefform} key={audioUrlform}>
+        <source src={audioUrlform} />
+      </audio>
       <div>
-        <button onClick={() => audiorefform.current.play()}>former</button>
+        <button onClick={() => audioRefform.current.play()}>former</button>
         <button onClick={() => audioRef.current.play()}>Play</button>
         <button onClick={() => audioRef.current.pause()}>Pause</button>
         <button onClick={() => setshow(!showControls)}>hide/show</button>
@@ -82,7 +91,7 @@ export default function App() {
         "Loading..."
       ) : (
         <>
-          <SongPlayer song={currentSong} song={formerSong} loop />
+          <SongPlayer song={currentSong} songfor={formerSong} loop />
           <Songs>
             <Heading title="Songs" />
             <ul>
