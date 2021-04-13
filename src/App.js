@@ -7,11 +7,10 @@ function Heading({ title }) {
 
 function SongPlayer({ showControls = false, song, ...remainingAudioProps }) {
   const audioRef = useRef();
+  const audiorefform = useRef();
   var [showControls, setshow] = useState(false);
 
-  var prop = { ...remainingAudioProps };
-  console.log(prop);
-
+  const { audioUrlform, coverUrlform } = song;
   const { audioUrl, coverUrl } = song;
   return (
     <section className="SongPlayer">
@@ -25,7 +24,9 @@ function SongPlayer({ showControls = false, song, ...remainingAudioProps }) {
       >
         <source src={audioUrl} />
       </audio>
+      <audio ref={audiorefform} key={audioUrlform}></audio>
       <div>
+        <button onClick={() => audiorefform.current.play()}>former</button>
         <button onClick={() => audioRef.current.play()}>Play</button>
         <button onClick={() => audioRef.current.pause()}>Pause</button>
         <button onClick={() => setshow(!showControls)}>hide/show</button>
@@ -63,6 +64,8 @@ export default function App() {
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [formerSongInd, setFormerInd] = useState(0);
   const currentSong = songs[currentSongIndex];
+  const formerSong = songs[formerSongInd];
+
   function handleSelectSong(selectedSong) {
     const audioIndex = songs.findIndex(
       (song) => song.audioUrl === selectedSong.audioUrl
@@ -79,7 +82,7 @@ export default function App() {
         "Loading..."
       ) : (
         <>
-          <SongPlayer song={currentSong} loop />
+          <SongPlayer song={currentSong} song={formerSong} loop />
           <Songs>
             <Heading title="Songs" />
             <ul>
@@ -87,7 +90,7 @@ export default function App() {
                 <SongListItem
                   key={song.audioUrl}
                   song={song}
-                  isCurrent={currentSong.audioUrl === song.audioUrl}
+                  isCurrent={currentSong.audioUrl === song.audioUrl} //highlihted
                   onSelect={handleSelectSong}
                   currentSongIndex
                 />
