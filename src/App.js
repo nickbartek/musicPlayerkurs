@@ -26,7 +26,6 @@ function SongPlayer({ showControls = false, song, ...remainingAudioProps }) {
         <source src={audioUrl} />
       </audio>
       <div>
-        <br />
         <button onClick={() => audioRef.current.play()}>Play</button>
         <button onClick={() => audioRef.current.pause()}>Pause</button>
         <button onClick={() => setshow(!showControls)}>hide/show</button>
@@ -50,6 +49,7 @@ function SongListItem({ song, isCurrent, onSelect }) {
 function Songs({ children }) {
   return <section className="Songs">{children}</section>;
 }
+
 export default function App() {
   const URL = "https://examples.devmastery.pl/songs-api/songs";
   const [songs, setSongs] = useState([]);
@@ -68,8 +68,8 @@ export default function App() {
       (song) => song.audioUrl === selectedSong.audioUrl
     );
     if (audioIndex >= 0) {
-      setCurrentSongIndex(audioIndex);
-      setFormerInd(currentSongIndex);
+      setCurrentSongIndex(audioIndex); //
+      setFormerInd(currentSongIndex); //setFormerIndex
       console.log(formerSongInd, currentSongIndex);
     }
   }
