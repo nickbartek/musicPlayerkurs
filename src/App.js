@@ -12,7 +12,6 @@ function SongPlayer({ showControls = false, song, onPreviousSongClick }) {
 
   console.log(audioUrl);
   console.log(audioRef);
-
   function playformer() {
     audioRef.current.play();
     onPreviousSongClick();
@@ -27,7 +26,7 @@ function SongPlayer({ showControls = false, song, onPreviousSongClick }) {
       </audio>
 
       <div>
-        <button onClick={() => playformer()}>former</button>
+        <button onClick={() => onPreviousSongClick()}>former</button>
         <button onClick={() => audioRef.current.play()}>Play</button>
         <button onClick={() => audioRef.current.pause()}>Pause</button>
         <button onClick={() => setshow(!showControls)}>hide/show</button>
