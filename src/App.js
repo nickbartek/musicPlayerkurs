@@ -5,16 +5,17 @@ function Heading({ title }) {
   return <h1>{title}</h1>;
 }
 
-function SongPlayer({ showControls = false, song, onPreviousSongClick }) {
+function SongPlayer({ song, onPreviousSongClick }) {
   const audioRef = useRef();
   var [showControls, setshow] = useState(false);
-  const { audioUrl, coverUrl } = song;
+  var { audioUrl, coverUrl } = song;
 
   console.log(audioUrl);
   console.log(audioRef);
   function playformer() {
-    audioRef.current.play();
     onPreviousSongClick();
+
+    audioRef.current.play();
   }
 
   return (
@@ -26,7 +27,9 @@ function SongPlayer({ showControls = false, song, onPreviousSongClick }) {
       </audio>
 
       <div>
-        <button onClick={() => onPreviousSongClick()}>former</button>
+        <button key={audioUrl} onClick={() => playformer()}>
+          former
+        </button>
         <button onClick={() => audioRef.current.play()}>Play</button>
         <button onClick={() => audioRef.current.pause()}>Pause</button>
         <button onClick={() => setshow(!showControls)}>hide/show</button>
@@ -71,8 +74,9 @@ export default function App() {
       (song) => song.audioUrl === selectedSong.audioUrl
     );
     if (audioIndex >= 0) {
-      setCurrentSongIndex(audioIndex); //
       setFormerInd(currentSongIndex); //setFormerIndex
+      setCurrentSongIndex(audioIndex); //
+
       console.log("former, current", formerSongInd, currentSongIndex);
     }
   }
